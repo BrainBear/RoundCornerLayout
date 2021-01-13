@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <FrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#0f0" />
+
+    <com.brainbear.corner.RoundCornerFrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#f00"
+        app:round_corner_radius="20dp"
+        app:round_corner_top_right_radius="0dp"
+        app:round_corner_bottom_right_radius="50dp"
+        />
+
+</FrameLayout>
