@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 
 class RoundCornerFrameLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), IRoundCorner {
 
     private val roundCornerHelper: RoundCornerHelper =
         RoundCornerHelper(this, context, attrs, defStyleAttr)
@@ -28,5 +28,61 @@ class RoundCornerFrameLayout @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
         roundCornerHelper.invalidate()
+    }
+
+    override fun setHalfSizeRadius(halfSizeRadius: Boolean) {
+        roundCornerHelper.setHalfSizeRadius(halfSizeRadius)
+    }
+
+    override fun setRadius(radius: Int) {
+        roundCornerHelper.setRadius(radius)
+    }
+
+    override fun getRadius(): Int {
+        return roundCornerHelper.getRadius()
+    }
+
+    override fun getRealRadius(): IntArray {
+        return roundCornerHelper.getRealRadius()
+    }
+
+    override fun setTopLeftRadius(radius: Int) {
+        roundCornerHelper.setTopLeftRadius(radius)
+    }
+
+    override fun getTopLeftRadius(): Int {
+        return roundCornerHelper.getTopLeftRadius()
+    }
+
+    override fun setTopRightRadius(radius: Int) {
+        roundCornerHelper.setTopRightRadius(radius)
+    }
+
+    override fun getTopRightRadius(): Int {
+        return roundCornerHelper.getTopRightRadius()
+    }
+
+    override fun setBottomRightRadius(radius: Int) {
+        roundCornerHelper.setBottomRightRadius(radius)
+    }
+
+    override fun getBottomRightRadius(): Int {
+        return roundCornerHelper.getBottomRightRadius()
+    }
+
+    override fun setBottomLeftRadius(radius: Int) {
+        roundCornerHelper.setBottomLeftRadius(radius)
+    }
+
+    override fun getBottomLeftRadius(): Int {
+        return roundCornerHelper.getBottomLeftRadius()
+    }
+
+    override fun setStrokeColor(color: Int) {
+        roundCornerHelper.setStrokeColor(color)
+    }
+
+    override fun setStrokeWidth(strokeWidth: Int) {
+        roundCornerHelper.setStrokeWidth(strokeWidth)
     }
 }

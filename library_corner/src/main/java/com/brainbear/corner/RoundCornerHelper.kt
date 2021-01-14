@@ -13,12 +13,15 @@ class RoundCornerHelper(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int
-) {
+) : IRoundCorner {
 
 
     private val clipPath = Path()
     private val roundCornerAttrs = RoundCornerAttrs()
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+    }
+    private var radii = floatArrayOf()
 
     init {
         val typedArray =
@@ -71,7 +74,7 @@ class RoundCornerHelper(
     private fun rebuildPath() {
         if (view.width == 0 || view.height == 0) return
 
-        val radii = if (roundCornerAttrs.halfSizeRadius) {
+        radii = if (roundCornerAttrs.halfSizeRadius) {
             val size = max(view.width, view.height).toFloat() / 2
             floatArrayOf(size, size, size, size, size, size, size, size)
         } else {
@@ -106,8 +109,7 @@ class RoundCornerHelper(
             Path.Direction.CW
         )
 
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = roundCornerAttrs.strokeWidth.toFloat() * 2
+        paint.strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat() * 2, 0f)
         paint.color = roundCornerAttrs.strokeColor
     }
 
@@ -119,7 +121,7 @@ class RoundCornerHelper(
     }
 
     fun onAfterDraw(canvas: Canvas) {
-        if (roundCornerAttrs.strokeWidth != 0 && roundCornerAttrs.strokeColor != Color.TRANSPARENT) {
+        if (roundCornerAttrs.strokeWidth > 0 && roundCornerAttrs.strokeColor != Color.TRANSPARENT) {
             canvas.drawPath(clipPath, paint)
         }
         canvas.restore()
@@ -127,5 +129,69 @@ class RoundCornerHelper(
 
     fun invalidate() {
         rebuildPath()
+    }
+
+    override fun setHalfSizeRadius(halfSizeRadius: Boolean) {
+        roundCornerAttrs.halfSizeRadius = halfSizeRadius
+        view.invalidate()
+    }
+
+    override fun setRadius(radius: Int) {
+        roundCornerAttrs.radius = radius
+        view.invalidate()
+    }
+
+    override fun getRadius(): Int {
+        return roundCornerAttrs.radius
+    }
+
+    override fun getRealRadius(): IntArray {
+        return intArrayOf(radii[0].toInt(), radii[2].toInt(), radii[4].toInt(), radii[6].toInt())
+    }
+
+    override fun setTopLeftRadius(radius: Int) {
+        roundCornerAttrs.topLeftRadius = radius
+        view.invalidate()
+    }
+
+    override fun getTopLeftRadius(): Int {
+        return roundCornerAttrs.topLeftRadius
+    }
+
+    override fun setTopRightRadius(radius: Int) {
+        roundCornerAttrs.topRightRadius = radius
+        view.invalidate()
+    }
+
+    override fun getTopRightRadius(): Int {
+        return roundCornerAttrs.topRightRadius
+    }
+
+    override fun setBottomRightRadius(radius: Int) {
+        roundCornerAttrs.bottomRightRadius = radius
+        view.invalidate()
+    }
+
+    override fun getBottomRightRadius(): Int {
+        return roundCornerAttrs.bottomRightRadius
+    }
+
+    override fun setBottomLeftRadius(radius: Int) {
+        roundCornerAttrs.bottomLeftRadius = radius
+        view.invalidate()
+    }
+
+    override fun getBottomLeftRadius(): Int {
+        return roundCornerAttrs.bottomLeftRadius
+    }
+
+    override fun setStrokeColor(color: Int) {
+        roundCornerAttrs.strokeColor = color
+        view.invalidate()
+    }
+
+    override fun setStrokeWidth(strokeWidth: Int) {
+        roundCornerAttrs.strokeWidth = strokeWidth
+        view.invalidate()
     }
 }
