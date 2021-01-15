@@ -113,7 +113,7 @@ class RoundCornerHelper(
         paint.color = roundCornerAttrs.strokeColor
     }
 
-    private fun valueValidOr(value: Int, other: Int) = if (value != INVALID_VALUE) value else other
+    private fun valueValidOr(value: Int, other: Int) = if (value > INVALID_VALUE) value else other
 
     fun onPreDraw(canvas: Canvas) {
         canvas.save()

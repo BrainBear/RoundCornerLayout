@@ -1,19 +1,24 @@
 package com.brainbear.roundcornerlayout
 
+import android.R
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.brainbear.corner.IRoundCorner
 import com.brainbear.roundcornerlayout.databinding.ActivityMainBinding
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewBinding: ActivityMainBinding
+    private lateinit var roundCornerViews: List<IRoundCorner>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,36 +27,40 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val layouts = listOf(viewBinding.rcLayout1, viewBinding.rcLayout2, viewBinding.rcLayout3)
+        roundCornerViews =
+            listOf(viewBinding.rcLayout1, viewBinding.rcLayout2, viewBinding.rcLayout3)
 
 
         viewBinding.cbHalfSize.setOnCheckedChangeListener { buttonView, isChecked ->
-            layouts.forEach { it.setHalfSizeRadius(isChecked) }
+            roundCornerViews.forEach { it.setHalfSizeRadius(isChecked) }
         }
 
         viewBinding.radius.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textRadius) { progress ->
-            layouts.forEach { it.setRadius(progress.dp) }
+            roundCornerViews.forEach { it.setRadius(progress.dp) }
         })
         viewBinding.radiusTopLeft.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textTopLeft) { progress ->
-            layouts.forEach { it.setTopLeftRadius(progress.dp) }
+            roundCornerViews.forEach { it.setTopLeftRadius(progress.dp) }
         })
         viewBinding.radiusTopRight.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textTopRight) { progress ->
-            layouts.forEach { it.setTopRightRadius(progress.dp) }
+            roundCornerViews.forEach { it.setTopRightRadius(progress.dp) }
         })
         viewBinding.radiusBottomRight.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textBottomRight) { progress ->
-            layouts.forEach { it.setBottomRightRadius(progress.dp) }
+            roundCornerViews.forEach { it.setBottomRightRadius(progress.dp) }
         })
         viewBinding.radiusBottomLeft.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textBottomLeft) { progress ->
-            layouts.forEach { it.setBottomLeftRadius(progress.dp) }
+            roundCornerViews.forEach { it.setBottomLeftRadius(progress.dp) }
         })
 
 
         viewBinding.stokeWidth.setOnSeekBarChangeListener(SeekBarChangedListener(viewBinding.textStrokeWidth) { progress ->
-            layouts.forEach { it.setStrokeWidth(progress.dp) }
+            roundCornerViews.forEach { it.setStrokeWidth(progress.dp) }
         })
 
-        layouts.forEach {
-            it.setStrokeColor(Color.WHITE)
+
+        updateStrokeColor(Color.WHITE, "FFFFFF")
+
+        viewBinding.colorView.setOnClickListener {
+            showStrokeColorSelectDialog()
         }
 
         viewBinding.radius.progress = viewBinding.radius.max / 2
@@ -59,6 +68,34 @@ class MainActivity : AppCompatActivity() {
         viewBinding.radiusTopRight.progress = -1
         viewBinding.radiusBottomRight.progress = -1
         viewBinding.radiusBottomLeft.progress = -1
+        viewBinding.stokeWidth.progress = 6
+    }
+
+
+    private fun showStrokeColorSelectDialog() {
+        ColorPickerDialog.Builder(this)
+            .setTitle("Stroke Color")
+            .setPositiveButton(getString(R.string.ok),
+                ColorEnvelopeListener { envelope, _ ->
+                    updateStrokeColor(envelope.color, envelope.hexCode)
+                })
+            .setNegativeButton(
+                getString(R.string.cancel)
+            ) { dialogInterface, _ -> dialogInterface.dismiss() }
+            .attachAlphaSlideBar(true) // the default value is true.
+            .attachBrightnessSlideBar(true) // the default value is true.
+            .setBottomSpace(12) // set a bottom space between the last slidebar and buttons.
+            .show()
+    }
+
+
+    private fun updateStrokeColor(color: Int, text: String) {
+        viewBinding.colorView.setBackgroundColor(color)
+        viewBinding.textStrokeColor.text = "#$text"
+        roundCornerViews.forEach {
+            it.setStrokeColor(color)
+        }
+
     }
 }
 
