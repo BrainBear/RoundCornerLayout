@@ -18,6 +18,7 @@ class RoundCornerHelper(
 
 
     private val clipPath = Path()
+    private val strokePath = Path()
     private val roundCornerAttrs = RoundCornerAttrs()
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
@@ -111,10 +112,31 @@ class RoundCornerHelper(
             Path.Direction.CW
         )
 
-        paint.strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat() * 2, 0f)
+
+        val strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat(), 0f)
+        strokePath.reset()
+        strokePath.addRoundRect(
+            viewRectToStrokeRect(rectF, strokeWidth),
+            radii.toList().map {
+                it - strokeWidth / 2
+            }.toFloatArray(),
+            Path.Direction.CW
+        )
+
+        paint.strokeWidth = strokeWidth
         paint.color = roundCornerAttrs.strokeColorStateList.getColorForState(
             view.drawableState,
             Color.TRANSPARENT
+        )
+    }
+
+    private fun viewRectToStrokeRect(rectF: RectF, strokeWidth: Float): RectF {
+        val halfStrokeWidth = strokeWidth / 2
+        return RectF(
+            rectF.left + halfStrokeWidth,
+            rectF.top + halfStrokeWidth,
+            rectF.right - halfStrokeWidth,
+            rectF.bottom - halfStrokeWidth
         )
     }
 
@@ -127,7 +149,7 @@ class RoundCornerHelper(
 
     fun onAfterDraw(canvas: Canvas) {
         if (roundCornerAttrs.strokeWidth > 0 && paint.color != Color.TRANSPARENT) {
-            canvas.drawPath(clipPath, paint)
+            canvas.drawPath(strokePath, paint)
         }
         canvas.restore()
     }
