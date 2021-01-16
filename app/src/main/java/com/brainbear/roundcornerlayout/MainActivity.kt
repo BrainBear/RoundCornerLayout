@@ -6,6 +6,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         roundCornerViews =
             listOf(viewBinding.rcLayout1, viewBinding.rcLayout2, viewBinding.rcLayout3)
 
+
+        roundCornerViews.forEach {
+            (it as? View)?.setOnClickListener {
+            }
+        }
 
         viewBinding.cbHalfSize.setOnCheckedChangeListener { buttonView, isChecked ->
             roundCornerViews.forEach { it.setHalfSizeRadius(isChecked) }
@@ -57,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        updateStrokeColor(Color.WHITE, "FFFFFF")
+        updateStrokeColor(Color.GRAY, "FF888888")
 
         viewBinding.colorView.setOnClickListener {
             showStrokeColorSelectDialog()

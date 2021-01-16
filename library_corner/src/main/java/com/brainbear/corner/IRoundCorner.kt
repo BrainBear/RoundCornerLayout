@@ -1,5 +1,6 @@
 package com.brainbear.corner
 
+import android.content.res.ColorStateList
 import androidx.annotation.ColorInt
 import androidx.annotation.Size
 
@@ -36,6 +37,10 @@ interface IRoundCorner {
 
     fun setStrokeColor(@ColorInt color: Int)
 
+    fun setStrokeColors(colors:ColorStateList)
+
     fun setStrokeWidth(strokeWidth: Int)
+
+    fun drawableStateChanged()
 
 }

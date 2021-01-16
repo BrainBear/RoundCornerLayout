@@ -1,5 +1,6 @@
 package com.brainbear.corner
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 
 data class RoundCornerAttrs(
@@ -9,6 +10,6 @@ data class RoundCornerAttrs(
     var topRightRadius: Int = 0,
     var bottomRightRadius: Int = 0,
     var bottomLeftRadius: Int = 0,
-    var strokeColor: Int = Color.TRANSPARENT,
+    var strokeColorStateList: ColorStateList = ColorStateList.valueOf(Color.TRANSPARENT),
     var strokeWidth: Int = 0,
 )

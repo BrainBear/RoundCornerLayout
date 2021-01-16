@@ -1,6 +1,7 @@
 package com.brainbear.corner
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
@@ -61,10 +62,11 @@ class RoundCornerHelper(
             R.styleable.round_corner_layout_attrs_round_corner_stroke_width,
             0
         )
-        roundCornerAttrs.strokeColor = typedArray.getColor(
-            R.styleable.round_corner_layout_attrs_round_corner_stroke_color,
-            Color.TRANSPARENT
-        )
+
+
+        roundCornerAttrs.strokeColorStateList =
+            typedArray.getColorStateList(R.styleable.round_corner_layout_attrs_round_corner_stroke_color)
+                ?: ColorStateList.valueOf(Color.TRANSPARENT)
 
         typedArray.recycle()
         rebuildPath()
@@ -110,7 +112,10 @@ class RoundCornerHelper(
         )
 
         paint.strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat() * 2, 0f)
-        paint.color = roundCornerAttrs.strokeColor
+        paint.color = roundCornerAttrs.strokeColorStateList.getColorForState(
+            view.drawableState,
+            Color.TRANSPARENT
+        )
     }
 
     private fun valueValidOr(value: Int, other: Int) = if (value > INVALID_VALUE) value else other
@@ -121,7 +126,7 @@ class RoundCornerHelper(
     }
 
     fun onAfterDraw(canvas: Canvas) {
-        if (roundCornerAttrs.strokeWidth > 0 && roundCornerAttrs.strokeColor != Color.TRANSPARENT) {
+        if (roundCornerAttrs.strokeWidth > 0 && paint.color != Color.TRANSPARENT) {
             canvas.drawPath(clipPath, paint)
         }
         canvas.restore()
@@ -186,12 +191,21 @@ class RoundCornerHelper(
     }
 
     override fun setStrokeColor(color: Int) {
-        roundCornerAttrs.strokeColor = color
+        roundCornerAttrs.strokeColorStateList = ColorStateList.valueOf(color)
+        view.invalidate()
+    }
+
+    override fun setStrokeColors(colors: ColorStateList) {
+        roundCornerAttrs.strokeColorStateList = colors
         view.invalidate()
     }
 
     override fun setStrokeWidth(strokeWidth: Int) {
         roundCornerAttrs.strokeWidth = strokeWidth
+        view.invalidate()
+    }
+
+    override fun drawableStateChanged() {
         view.invalidate()
     }
 }

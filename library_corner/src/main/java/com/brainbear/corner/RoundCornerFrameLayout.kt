@@ -1,10 +1,9 @@
 package com.brainbear.corner
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.FrameLayout
 
 class RoundCornerFrameLayout @JvmOverloads constructor(
@@ -82,7 +81,17 @@ class RoundCornerFrameLayout @JvmOverloads constructor(
         roundCornerHelper.setStrokeColor(color)
     }
 
+    override fun setStrokeColors(colors: ColorStateList) {
+        roundCornerHelper.setStrokeColors(colors)
+    }
+
     override fun setStrokeWidth(strokeWidth: Int) {
         roundCornerHelper.setStrokeWidth(strokeWidth)
     }
+
+    override fun drawableStateChanged() {
+        super.drawableStateChanged()
+        roundCornerHelper.drawableStateChanged()
+    }
+
 }
