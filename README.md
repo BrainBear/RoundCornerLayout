@@ -33,7 +33,8 @@
 * RoundCornerFrameLayout
 * RoundCornerConstraintLayout
 
-感谢 [ColorPickerView](https://github.com/skydoves/ColorPickerView) 提供的接口
+## 感谢
+[ColorPickerView](https://github.com/skydoves/ColorPickerView) 
 
 
 
