@@ -16,8 +16,8 @@
         android:orientation="horizontal">
 
 
-        <com.brainbear.corner.RoundCornerButton
-            android:src="@mipmap/ic_launcher"
+        <com.brainbear.corner.RoundCornerImageView
+            android:src="@drawable/bear"
             android:id="@+id/rcLayout1"
             android:layout_width="100dp"
             android:layout_height="100dp"
