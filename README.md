@@ -24,6 +24,8 @@
     <attr name="round_corner_stroke_width" format="dimension" />
 ```
 
+优先级：round_corner_half_size_radius > round_corner_x_x_radius > round_corner_radius
+
 ## 支持
 
 * RoundCornerImageView
