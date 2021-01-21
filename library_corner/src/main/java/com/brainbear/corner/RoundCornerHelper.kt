@@ -21,7 +21,7 @@ class RoundCornerHelper(
     private val strokePath = Path()
     private val roundCornerAttrs = RoundCornerAttrs()
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.STROKE
+        style = Paint.Style.FILL
     }
     private var radii = floatArrayOf()
 
@@ -113,17 +113,23 @@ class RoundCornerHelper(
         )
 
 
-        val strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat(), 0f)
+        val strokeWidth = max(roundCornerAttrs.strokeWidth.toFloat() * 2, 0f)
         strokePath.reset()
+
+        strokePath.addRoundRect(
+            rectF,
+            radii,
+            Path.Direction.CW
+        )
+
         strokePath.addRoundRect(
             viewRectToStrokeRect(rectF, strokeWidth),
             radii.toList().map {
                 it - strokeWidth / 2
             }.toFloatArray(),
-            Path.Direction.CW
+            Path.Direction.CCW
         )
 
-        paint.strokeWidth = strokeWidth
         paint.color = roundCornerAttrs.strokeColorStateList.getColorForState(
             view.drawableState,
             Color.TRANSPARENT
@@ -132,12 +138,26 @@ class RoundCornerHelper(
 
     private fun viewRectToStrokeRect(rectF: RectF, strokeWidth: Float): RectF {
         val halfStrokeWidth = strokeWidth / 2
-        return RectF(
+        val result = RectF(
             rectF.left + halfStrokeWidth,
             rectF.top + halfStrokeWidth,
             rectF.right - halfStrokeWidth,
             rectF.bottom - halfStrokeWidth
         )
+
+        if (result.left > result.right) {
+            val center = (result.left + result.right) / 2
+            result.left = center
+            result.right = center
+        }
+
+        if (result.top > result.bottom) {
+            val center = (result.top + result.bottom) / 2
+            result.top = center
+            result.bottom = center
+        }
+
+        return result
     }
 
     private fun valueValidOr(value: Int, other: Int) = if (value > INVALID_VALUE) value else other
