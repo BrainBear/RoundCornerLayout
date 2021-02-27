@@ -46,4 +46,81 @@
         <attr name="round_corner_stroke_width" />
         <attr name="round_corner_stroke_type" />
     </declare-styleable>
+
+
+    <declare-styleable name="RoundCornerConstraintLayout">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundCornerLinearLayout">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundCornerRelativeLayout">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundCornerTextView">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
+
+
+    <declare-styleable name="RoundCornerImageView">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerButton">
+        <attr name="round_corner_half_size_radius" />
+        <attr name="round_corner_radius" />
+        <attr name="round_corner_top_left_radius" />
+        <attr name="round_corner_top_right_radius" />
+        <attr name="round_corner_bottom_left_radius" />
+        <attr name="round_corner_bottom_right_radius" />
+        <attr name="round_corner_stroke_color" />
+        <attr name="round_corner_stroke_width" />
+        <attr name="round_corner_stroke_type" />
+    </declare-styleable>
 </resources>
